@@ -22,14 +22,18 @@ class SignupActivity : AppCompatActivity() {
             val username = binding.signupUsername.text.toString()
             val password = binding.signupPassword.text.toString()
 
-            val insertedRowId = databaseHelper.insertUser(username, password)
-
-            if (insertedRowId != -1L) {
-                Toast.makeText(this, "Signup Successful", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
+            if (databaseHelper.isUserExists(username)) {
+                Toast.makeText(this, "Username already exists", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Signup Failed", Toast.LENGTH_SHORT).show()
+                val insertedRowId = databaseHelper.insertUser(username, password)
+                if (insertedRowId != -1L) {
+                    Toast.makeText(this, "Signup Successful", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish() // Tutup SignupActivity agar tidak kembali ke sini saat logout
+                } else {
+                    Toast.makeText(this, "Signup Failed", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

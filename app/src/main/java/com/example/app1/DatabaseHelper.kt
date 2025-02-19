@@ -30,6 +30,16 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         onCreate(db)
     }
 
+    fun isUserExists(username: String): Boolean {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_USERNAME = ?"
+        val cursor = db.rawQuery(query, arrayOf(username))
+        val exists = cursor.count > 0
+        cursor.close()
+        db.close()
+        return exists
+    }
+
     fun insertUser(username: String, password: String): Long {
         val values = ContentValues()
         values.put(COLUMN_USERNAME, username)

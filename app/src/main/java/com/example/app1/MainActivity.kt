@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnKeluar.setOnClickListener {
-            finish()
+            finishAffinity()
         }
 
         // Tambahkan event untuk buttonProject1

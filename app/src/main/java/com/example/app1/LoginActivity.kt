@@ -26,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
             if (userExists) {
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // Hapus back stack
                 startActivity(intent)
                 finish()
             } else {
